@@ -3,13 +3,52 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger:
+pr:
 - master
-- dev
+- releases/*
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- task: AzureResourceGroupDeployment@2
+  displayName: 'Azure Deployment:Create Or Update Resource Group action on databricks-rg-ci'
+  inputs:
+    azureSubscription: 'Pay-As-You-Go (9ba089ac-b8fc-496b-a408-e42840ba07de)'
+    resourceGroupName: 'databricks-rg-ci'
+    location: 'Australia East'
+    csmFile: azuredeploy.json
+    csmParametersFile: azuredeploy.parameters.json
+    deploymentMode: Validation
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(System.DefaultWorkingDirectory) for Pester Test'
+  inputs:
+    Contents: |
+     **/*.json
+     **/*.paramaters.json
+     **/*.ps1
+    TargetFolder: '$(System.DefaultWorkingDirectory)'
+- task: AzurePowerShell@4
+  displayName: 'Run Pester Test'
+  inputs:
+    azureSubscription: 'Pay-As-You-Go (9ba089ac-b8fc-496b-a408-e42840ba07de)'
+    ScriptPath: '$(System.DefaultWorkingDirectory)\Invoke-Pester.ps1'
+    ScriptArguments: '-WorkingDirForCI $(System.DefaultWorkingDirectory)'
+    azurePowerShellVersion: LatestVersion
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+- task: PublishTestResults@2
+  displayName: 'Publish Test Results **/TEST-Pester-Test-Results-*.xml '
+  inputs:
+    testResultsFormat: NUnit
+    testResultsFiles: |
+     **/TEST-Pester-Test-Results-*.xml
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+  inputs:
+    Contents: |
+     **/*.json
+     **/*.paramaters.json
+    TargetFolder: '$(build.artifactstagingdirectory)'
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
+  
