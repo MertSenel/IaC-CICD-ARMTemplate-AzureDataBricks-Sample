@@ -6,6 +6,7 @@ Param(
 if($WorkingDirForCI){
 Write-Output "Changing working directory to $WorkingDirForCI"
 Set-Location -Path $WorkingDirForCI
+Get-ChildItem #list directory objects
 }
 
 
