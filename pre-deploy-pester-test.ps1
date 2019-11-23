@@ -22,6 +22,9 @@ Describe "DataBrick ARM Template Deployment Tests" {
                               -ErrorAction Stop `
                                5>&1
 
+    #debug output
+    $output
+
     $result = (($output[27] -split "Body:")[1] | ConvertFrom-Json).properties
 
     It "Should be deployed successfully" {
