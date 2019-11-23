@@ -7,9 +7,6 @@
       },
       "env":{
         "value": "ci"
-      },
-      "location":{
-        "value": "australiaeast"
       }
     }
   }
