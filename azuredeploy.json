@@ -86,7 +86,7 @@
     "nsgId": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]",
     "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]",
     "managedResourceGroupId": "[concat(subscription().id, '/resourceGroups/', variables('managedResourceGroupName'))]",
-    "managedResourceGroupName": "[concat('databricks-rg-',variables('env'), variables('workspaceNameFull'), '-', uniqueString(variables('workspaceNameFull'), resourceGroup().id))]"
+    "managedResourceGroupName": "[concat('databricks-rg-',variables('env'), variables('workspaceNameFull'), '-', uniqueString(variables('workspaceNameFull'),'-', resourceGroup().id))]"
   },
   "resources": [
     {
