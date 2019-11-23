@@ -14,7 +14,7 @@ Describe "DataBrick ARM Template Deployment Tests" {
   }
 
   Context "Run Mock Deployment with Test Cmdlet" {
-    $output = Test-AzureRmResourceGroupDeployment `
+    $output = Test-AzResourceGroupDeployment `
                               -Mode "Complete" `
                               -ResourceGroupName $ResourceGroupName `
                               -TemplateFile $TemplateFile `
