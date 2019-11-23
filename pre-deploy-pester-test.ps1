@@ -1,7 +1,7 @@
 Param(
-  [string] [Parameter] $ResourceGroupName= "databricks-rg-ci",
-  [string] [Parameter] $TemplateFile = "azuredeploy.json",
-  [string] [Parameter] $ParametersFile = "azuredeploy.parameters.json"
+  [string] $ResourceGroupName = "databricks-rg-ci",
+  [string] $TemplateFile = "azuredeploy.json",
+  [string] $ParametersFile = "azuredeploy.parameters.json"
 )
 
 Describe "DataBrick ARM Template Deployment Tests" {
