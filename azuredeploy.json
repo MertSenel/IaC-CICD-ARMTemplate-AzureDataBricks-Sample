@@ -6,15 +6,7 @@
       "type":"string",
       "metadata": {
         "description": "The name of the SDLC stage"
-      },
-      "allowedValues":[
-        "ci",
-        "dev",
-        "test",
-        "uat",
-        "staging",
-        "prod"
-      ]
+      }
     },
     "workspaceNameBase": {
       "type": "string",
