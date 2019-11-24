@@ -9,6 +9,9 @@ Set-Location -Path $WorkingDirForCI
 Get-ChildItem #list directory objects
 }
 
+#Get Latest Pester
+Install-Module -Name Pester -Force -SkipPublisherCheck
+
 
 $parameters = @{ ResourceGroupName = "databricks-rg-ci"; }
 $script = @{ Path = ".\pre-deploy-pester-tests.ps1"; Parameters = $parameters }
