@@ -27,34 +27,33 @@
       "nsgId": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
     },
     "resources": [
-      {
+    {
       "apiVersion": "2019-06-01",
       "type": "Microsoft.Network/networkSecurityGroups",
       "location": "[parameters('location')]",
       "name": "[variables('nsgName')]"
-      },
-      {
-        "apiVersion": "2018-02-01",
-        "type": "Microsoft.Network/virtualNetworks",
-        "location": "[parameters('location')]",
-        "name": "[variables('vnetName')]",
-        "dependsOn": [
+    },
+    {
+      "apiVersion": "2019-06-01",
+      "type": "Microsoft.Network/virtualNetworks",
+      "location": "[parameters('location')]",
+      "name": "[variables('vnetName')]",
+      "dependsOn": [
         "[concat('Microsoft.Network/networkSecurityGroups/', variables('nsgName'))]"
-        ],
-        "properties": {
-          "addressSpace": {
-            "addressPrefixes": [
-              "[variables('vnetCidr')]"
-            ]
-          },
-          "subnets": [
-            {
-              "name": "[variables('publicSubnetName')]",
-              "properties": {
-                "addressPrefix": "[variables('publicSubnetCidr')]",
-                "networkSecurityGroup": {
+      ],
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('vnetCidr')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[variables('publicSubnetName')]",
+            "properties": {
+              "addressPrefix": "[variables('publicSubnetCidr')]",
+              "networkSecurityGroup": {
                 "id": "[variables('nsgId')]"
-              }
               },
               "delegations": [
                 {
@@ -64,14 +63,14 @@
                   }
                 }
               ]
-            },
-            {
-              "name": "[variables('privateSubnetName')]",
-              "properties": {
-                "addressPrefix": "[variables('privateSubnetCidr')]",
-                "networkSecurityGroup": {
+            }
+          },
+          {
+            "name": "[variables('privateSubnetName')]",
+            "properties": {
+              "addressPrefix": "[variables('privateSubnetCidr')]",
+              "networkSecurityGroup": {
                 "id": "[variables('nsgId')]"
-              }
               },
               "delegations": [
                 {
@@ -82,14 +81,15 @@
                 }
               ]
             }
-          ]
-        }
-      }
-    ],
-    "outputs": {
-      "existingVNETId": {
-        "type": "string",
-        "value": "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
+          }
+        ]
       }
     }
+  ],
+  "outputs":{
+    "existingVNETId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]"
+    }
   }
+}

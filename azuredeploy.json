@@ -32,9 +32,18 @@
       "metadata": {
         "description": "Location for all resources."
       }
+    },
+    "customVirtualNetworkId": {
+      "type": "string",
+      "metadata": {
+        "description": "The complete ARM resource Id of the custom virtual network."
+      }
     }
   },
   "variables": {
+    "customVirtualNetworkId" : "[parameters('customVirtualNetworkId')]",
+    "customPublicSubnetName" : "public-subnet",
+    "customPrivateSubnetName" : "private-subnet",
     "workspaceNameFull" : "[concat(parameters('workspaceNameBase'),'-',parameters('env'))]",
     "managedResourceGroupName": "[concat('databricks-rg-',parameters('env'),'-', variables('workspaceNameFull'), '-', uniqueString(variables('workspaceNameFull'), resourceGroup().id))]"
   },
@@ -48,7 +57,18 @@
         "name": "[parameters('pricingTier')]"
       },
       "properties": {
-        "ManagedResourceGroupId": "[concat(subscription().id, '/resourceGroups/', variables('managedResourceGroupName'))]"
+        "ManagedResourceGroupId": "[concat(subscription().id, '/resourceGroups/', variables('managedResourceGroupName'))]",
+        "parameters": {
+          "customVirtualNetworkId": {
+          "value": "[variables('customVirtualNetworkId')]"
+        },
+          "customPublicSubnetName": {
+          "value": "[variables('customPublicSubnetName')]"
+        },
+          "customPrivateSubnetName": {
+          "value": "[variables('customPrivateSubnetName')]"
+          }
+        }
       }
     }
   ],
