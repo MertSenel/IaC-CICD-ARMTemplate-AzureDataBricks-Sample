@@ -9,7 +9,7 @@
         "value": "ci"
       },
       "customVirtualNetworkId":{
-        "value": "/subscriptions/9ba089ac-b8fc-496b-a408-e42840ba07de/resourceGroups/databricks-vnetinj-rg-ci/providers/Microsoft.Network/virtualNetworks/databricks-vnetinj-vnet-ci"
+        "value":""
       }
     }
   }
