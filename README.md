@@ -27,7 +27,7 @@ https://dev.azure.com/mertsenel/Infrastructure-as-Code-Samples/_release?definiti
 - The environment abbrevation ex. dev, qa, test, staging, prod is automatically appended to naming conventions of resources and resource groups.
 - This structure allows dynamic paramaterization of the CD pipelines. 
 
-(The project was initially just deployed a standalone DataBricks Workspace, later on I've converted the project to deploy Azure Databricks worksapce with VNET injection. I will leave development branches in case you want to see my work, history is also available through Pull Requests)
+(The project was initially just deployed a standalone DataBricks Workspace, later on I've converted the project to deploy Azure Databricks workspace with VNET injection. I will leave development branches in case you want to see my work, history is also available through Pull Requests)
 
 ## Azure DevOps Pipelines:
 ### Continuous Integration
