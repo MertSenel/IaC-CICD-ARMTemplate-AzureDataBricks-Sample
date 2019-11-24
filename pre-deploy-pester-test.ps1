@@ -30,10 +30,14 @@ Describe "DataBrick ARM Template Deployment Tests" {
                                5>&1
     $DebugPreference = "SilentlyContinue"
     #debug output
+    
+    if($output){
     $output
-
     $result = (($output[27] -split "Body:")[1] | ConvertFrom-Json).properties
-
+    }
+    else{
+      echo "output is null"
+    }
     It "Should be deployed successfully" {
       $result.provisioningState | Should -Be "Succeeded"
     }
