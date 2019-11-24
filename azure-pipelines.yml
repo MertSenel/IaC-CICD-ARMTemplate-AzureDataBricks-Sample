@@ -15,24 +15,25 @@ pool:
 
 steps:
 - task: AzureResourceGroupDeployment@2
-  displayName: 'Azure Deployment:Create Or Update Resource Group action on databricks-rg-ci'
+  displayName: 'Validate Prerequisites ARM Template'
   inputs:
     azureSubscription: 'Pay-As-You-Go (9ba089ac-b8fc-496b-a408-e42840ba07de)'
-    resourceGroupName: 'databricks-rg-ci'
+    resourceGroupName: 'databricks-vnetinj-rg-ci'
     location: 'Australia East'
     csmFile: azuredeploy.json
     csmParametersFile: azuredeploy.parameters.json
     deploymentMode: Validation
-- task: CopyFiles@2
-  displayName: 'Copy Files to: $(System.DefaultWorkingDirectory) for Pester Test'
+- task: AzureResourceGroupDeployment@2
+  displayName: 'Validate Main ARM Template'
   inputs:
-    Contents: |
-     **/*.json
-     **/*.paramaters.json
-     **/*.ps1
-    TargetFolder: '$(System.DefaultWorkingDirectory)'
+    azureSubscription: 'Pay-As-You-Go (9ba089ac-b8fc-496b-a408-e42840ba07de)'
+    resourceGroupName: 'databricks-vnetinj-rg-ci'
+    location: 'Australia East'
+    csmFile: prereqs/prereq.azuredeploy.json
+    csmParametersFile: prereqs/prereq.azuredeploy.parameters.json
+    deploymentMode: Validation
 - task: AzurePowerShell@4
-  displayName: 'Run Pester Test'
+  displayName: 'Run Pester Tests'
   inputs:
     azureSubscription: 'Pay-As-You-Go (9ba089ac-b8fc-496b-a408-e42840ba07de)'
     ScriptPath: '$(System.DefaultWorkingDirectory)\Invoke-Pester.ps1'
@@ -54,4 +55,3 @@ steps:
     TargetFolder: '$(build.artifactstagingdirectory)'
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
-  
