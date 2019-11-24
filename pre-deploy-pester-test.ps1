@@ -13,7 +13,14 @@ Describe "DataBrick ARM Template Deployment Tests" {
     $DebugPreference = "SilentlyContinue"
   }
 
+
   Context "Run Mock Deployment with Test Cmdlet" {
+    ## DEBUG ##
+    echo $ResourceGroupName
+    echo $TemplateFile
+    echo $ParametersFile
+    ## DEBUG ##
+    $DebugPreference = "Continue"
     $output = Test-AzResourceGroupDeployment `
                               -Mode "Complete" `
                               -ResourceGroupName $ResourceGroupName `
@@ -21,7 +28,7 @@ Describe "DataBrick ARM Template Deployment Tests" {
                               -TemplateParameterFile $ParametersFile `
                               -ErrorAction Stop `
                                5>&1
-
+    $DebugPreference = "SilentlyContinue"
     #debug output
     $output
 
